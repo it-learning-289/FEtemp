@@ -23,15 +23,25 @@ function displayData() {
         .then(response => response.json())
         .then(data => {
             console.log(data);
-            const dataList = document.getElementById("dataList");
-            dataList.innerHTML = "";
-            data.forEach(item => {
-                const li = document.createElement("li");
-                li.textContent = item;
-                dataList.appendChild(li);
-            });
+            // const dataList = document.getElementById("dataList");
+             const tableBody = document.getElementById("productTableBody");
+             data.forEach(product => {
+                 const row = document.createElement("tr");
+                 row.innerHTML = `
+                     <td>${product.id}</td>
+                     <td>${product.name}</td>
+                     <td>${product.price}</td>
+                     <td>${product.categories}</td>
+                 `;
+                 tableBody.appendChild(row);
+             });
         })
-        .catch(error => console.error("Error fetching data:", error));
+        .catch((error) => {
+         console.error("Error fetching data:", error);
+         alert(`Error fetching data`);
+        
+        })
+            
 }
 
 // Check if user is logged in on page load
