@@ -17,25 +17,25 @@ function displayData() {
     fetch(apiUrl + "/shoes/1125", {
         method: "GET",
         headers: {
-            "TUNGTV_AUTHEN_TOKEN":  authToken
+            "TUNGTV_AUTHEN_TOKEN": authToken
         }
     })
-    .then(response => response.json())
-    .then(data => {
-        console.log(data);
-        const dataList = document.getElementById("dataList");
-        dataList.innerHTML = "";
-        data.forEach(item => {
-            const li = document.createElement("li");
-            li.textContent = item;
-            dataList.appendChild(li);
-        });
-    })
-    .catch(error => console.error("Error fetching data:", error));
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            const dataList = document.getElementById("dataList");
+            dataList.innerHTML = "";
+            data.forEach(item => {
+                const li = document.createElement("li");
+                li.textContent = item;
+                dataList.appendChild(li);
+            });
+        })
+        .catch(error => console.error("Error fetching data:", error));
 }
 
 // Check if user is logged in on page load
-window.onload = function() {
+window.onload = function () {
     if (isLoggedIn()) {
         // If logged in, hide login/register forms and show data container
         document.getElementById("container").style.display = "none";
@@ -44,7 +44,7 @@ window.onload = function() {
     }
 }
 
-document.getElementById("loginForm").addEventListener("submit", function(event) {
+document.getElementById("loginForm").addEventListener("submit", function (event) {
     event.preventDefault();
 
     const email = document.getElementById("loginEmail").value;
@@ -57,22 +57,22 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
         },
         body: JSON.stringify({ username: email, password: password })
     })
-    .then(response => response.json())
-    .then(data => {
-        const authToken = data["tungtv_authen_token"];
-        localStorage.setItem("tungtv_authen_token", authToken);
+        .then(response => response.json())
+        .then(data => {
+            const authToken = data["tungtv_authen_token"];
+            localStorage.setItem("tungtv_authen_token", authToken);
 
-        // Hide login/register forms and show data container
-        document.getElementById("container").style.display = "none";
-        document.getElementById("dataContainer").style.display = "block";
+            // Hide login/register forms and show data container
+            document.getElementById("container").style.display = "none";
+            document.getElementById("dataContainer").style.display = "block";
 
-        // Display data after login
-        displayData();
-    })
-    .catch(error => console.error("Error logging in:", error));
+            // Display data after login
+            displayData();
+        })
+        .catch(error => console.error("Error logging in:", error));
 });
 
-document.getElementById("registerForm").addEventListener("submit", function(event) {
+document.getElementById("registerForm").addEventListener("submit", function (event) {
     event.preventDefault();
 
     const name = document.getElementById("registerName").value;
@@ -86,9 +86,9 @@ document.getElementById("registerForm").addEventListener("submit", function(even
         },
         body: JSON.stringify({ username: email, password: password })
     })
-    .then(response => response.json())
-    .then(data => {
-        console.log("Registration successful:", data);
-    })
-    .catch(error => console.error("Error registering:", error));
+        .then(response => response.json())
+        .then(data => {
+            console.log("Registration successful:", data);
+        })
+        .catch(error => console.error("Error registering:", error));
 });
