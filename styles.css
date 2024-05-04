@@ -105,3 +105,42 @@ th {
 tr:hover {
     background-color: #f5f5f5;
 }
+
+
+/* test */
+/* .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    width: 100%;
+  
+}
+
+.pagination button {
+    margin: 0 50px;
+    padding: 5px 10px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    background-color: #fff;
+} */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+    margin: auto; /* Thêm margin: auto; để căn giữa */
+}
+
+.pagination button {
+    padding: 5px 10px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    background-color: #fff;
+}
+
+
+.pagination button.active {
+    background-color: #007bff;
+    color: #fff;
+}
