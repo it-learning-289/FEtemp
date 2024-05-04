@@ -144,3 +144,7 @@ tr:hover {
     background-color: #007bff;
     color: #fff;
 }
+
+#logoutButton {
+    margin-left: 90%;
+}
