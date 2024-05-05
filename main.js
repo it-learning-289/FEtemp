@@ -101,13 +101,22 @@ function showShoes(authToken) {
         }
         // Replace the URL below with the actual URL of your API
         fetch(`http://10.110.69.13:8081/api/shoes?page=${page}`, Options)
-            .then(response => response.json())
+            .then(response => {
+                if (response.status !== 401) {
+                    return response.json();
+                }
+                alert("Unauthen!!!");
+                loggout();
+
+            })
             .then(data => {
                 displayProducts(data.users); // Display products
                 displayPagination(page, data.total_pages); // Display pagination controls
             })
             .catch(error => {
                 console.error('Error fetching products:', error);
+
+
             })
     }
 
@@ -194,9 +203,10 @@ function showShoes(authToken) {
     fetchProducts(currentPage);
     // });
 }
-document.getElementById("logoutButton").addEventListener("click", function () {
+function loggout() {
     // Add your logout functionality here
     localStorage.removeItem("tungtv_authen_token");
     location.reload();
     // For example, redirect to a logout page or perform a logout API request
-});
+}
+document.getElementById("logoutButton").addEventListener("click", loggout);

@@ -37,7 +37,6 @@ label {
     margin-bottom: 5px;
 }
 
-input[type="text"],
 input[type="email"],
 input[type="password"] {
     width: 100%;
@@ -106,23 +105,6 @@ tr:hover {
     background-color: #f5f5f5;
 }
 
-
-/* test */
-/* .pagination {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-    width: 100%;
-  
-}
-
-.pagination button {
-    margin: 0 50px;
-    padding: 5px 10px;
-    cursor: pointer;
-    border: 1px solid #ccc;
-    background-color: #fff;
-} */
 .pagination {
     display: flex;
     justify-content: center;
@@ -147,4 +129,30 @@ tr:hover {
 
 #logoutButton {
     margin-left: 90%;
+}
+
+.search-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+#searchInput {
+    padding: 8px;
+    width: 200px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#searchButton {
+    padding: 8px 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+#searchButton:hover {
+    background-color: #45a049;
 }
