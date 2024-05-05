@@ -43,10 +43,12 @@
 
     <div id="dataContainer">
         <h2>Shoes Tabble</h2> 
+
         <div class="search-container">
-            <input type="text" id="searchInput" placeholder="Search...">
-            <button onclick="search()" id="searchButton">Search</button>
+            <input type="text" id="searchInput" placeholder="Search ID...">
+            <button id="searchButton">Search</button>
         </div>
+
         <button id="logoutButton">Logout</button>
         <table id="productTable">
             <thead>
@@ -60,7 +62,7 @@
             <tbody id="productList">
                 <ul id="dataList"></ul>
                 <!-- Table rows will be added here -->
-                
+                <div id ="searchResults"></div>
             </tbody>
         </table>
         <br>

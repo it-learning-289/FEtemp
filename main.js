@@ -14,78 +14,57 @@ function displayData() {
         return;
     }
     showShoes(authToken);
+    //search id 
+document.getElementById("searchButton").addEventListener("click", search(authToken));
 
 }
-
-// Check if user is logged in on page load
-window.onload = function () {
-    if (isLoggedIn()) {
-        // If logged in, hide login/register forms and show data container
-        document.getElementById("container").style.display = "none";
-        document.getElementById("dataContainer").style.display = "block";
-        displayData();
-    }
-    else {
-        document.getElementById("container").style.display = "block";
-        document.getElementById("dataContainer").style.display = "none";
-    }
-}
-
-document.getElementById("loginForm").addEventListener("submit", function (event) {
-    event.preventDefault();
-
-    const email = document.getElementById("loginEmail").value;
-    const password = document.getElementById("loginPassword").value;
-
-    fetch(apiUrl + "/get_token_auth", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ username: email, password: password })
-    })
-        .then(response => response.json())
-        .then(data => {
-            const authToken = data["tungtv_authen_token"];
-            localStorage.setItem("tungtv_authen_token", authToken);
-
-            // Hide login/register forms and show data container
-            document.getElementById("container").style.display = "none";
-            document.getElementById("dataContainer").style.display = "block";
-
-            // Display data after login
-            displayData();
-        })
-        .catch(error => console.error("Error logging in:", error));
-});
-
-document.getElementById("registerForm").addEventListener("submit", function (event) {
-    event.preventDefault();
-
-    const email = document.getElementById("registerEmail").value;
-    const password = document.getElementById("registerPassword").value;
-
-    fetch(apiUrl + "/register", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ username: email, password: password })
-    })
-        .then(response => response.json())
-        .then(data => {
-            console.log("Registration successful:", data);
-            alert("Registration successful:", data);
-        })
-        .catch(error => console.error("Error registering:", error));
-});
 
 
 //show shoes
-function showShoes(authToken) {
-    // document.addEventListener("DOMContentLoaded", function () {
 
-    // const totalPages = 1000; // Example: total number of pages
+function search(authToken) {
+    var input, filter, ul, li, a, i, txtValue;
+    input = document.getElementById('searchInput');
+    filter = input.value.toUpperCase();
+    ul = document.getElementById("searchResults");
+    
+    // Xóa các kết quả tìm kiếm trước đó
+    ul.innerHTML = '';
+    Options = {
+        method: "GET",
+        headers: {
+            "TUNGTV_AUTHEN_TOKEN": authToken
+        }
+    }
+    // Gửi yêu cầu tới API
+    fetch('http://10.110.69.13:8081/api/shoes/' + filter,Options)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data);
+           
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                        <td>${data.id}</td>
+                        <td>${data.name}</td>
+                        <td>${data.price}</td>
+                        <td>${data.categories}</td>
+                     `;
+            ul.appendChild(row);
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });
+}
+
+
+
+function showShoes(authToken) {
+
     let currentPage = 1; // Current page
     const maxPagesToShow = 10; // Maximum number of pages to show
     const productList = document.getElementById("productList");
@@ -99,14 +78,15 @@ function showShoes(authToken) {
                 "TUNGTV_AUTHEN_TOKEN": authToken
             }
         }
-        // Replace the URL below with the actual URL of your API
+
+        //API-pagination list
         fetch(`http://10.110.69.13:8081/api/shoes?page=${page}`, Options)
             .then(response => {
                 if (response.status !== 401) {
                     return response.json();
                 }
                 alert("Unauthen!!!");
-                loggout();
+                logout();
 
             })
             .then(data => {
@@ -115,8 +95,6 @@ function showShoes(authToken) {
             })
             .catch(error => {
                 console.error('Error fetching products:', error);
-
-
             })
     }
 
@@ -201,12 +179,80 @@ function showShoes(authToken) {
 
     // Initial page load
     fetchProducts(currentPage);
-    // });
 }
-function loggout() {
-    // Add your logout functionality here
+
+//function log out
+function logout() {
     localStorage.removeItem("tungtv_authen_token");
     location.reload();
-    // For example, redirect to a logout page or perform a logout API request
 }
-document.getElementById("logoutButton").addEventListener("click", loggout);
+
+//click button to log out
+document.getElementById("logoutButton").addEventListener("click", logout);
+
+// Check if user is logged in on page load
+window.onload = function () {
+    if (isLoggedIn()) {
+        // If logged in, hide login/register forms and show data container
+        document.getElementById("container").style.display = "none";
+        document.getElementById("dataContainer").style.display = "block";
+        displayData();
+    }
+    else {
+        document.getElementById("container").style.display = "block";
+        document.getElementById("dataContainer").style.display = "none";
+    }
+}
+
+//Log in
+document.getElementById("loginForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const email = document.getElementById("loginEmail").value;
+    const password = document.getElementById("loginPassword").value;
+
+    fetch(apiUrl + "/get_token_auth", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ username: email, password: password })
+    })
+        .then(response => response.json())
+        .then(data => {
+            const authToken = data["tungtv_authen_token"];
+            localStorage.setItem("tungtv_authen_token", authToken);
+
+            // Hide login/register forms and show data container
+            document.getElementById("container").style.display = "none";
+            document.getElementById("dataContainer").style.display = "block";
+
+            // Display data after login
+            displayData();
+        })
+        .catch(error => console.error("Error logging in:", error));
+});
+
+//Register
+document.getElementById("registerForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const email = document.getElementById("registerEmail").value;
+    const password = document.getElementById("registerPassword").value;
+
+    fetch(apiUrl + "/register", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ username: email, password: password })
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Registration successful:", data);
+            alert("Registration successful:", data);
+        })
+        .catch(error => console.error("Error registering:", error));
+});
+
+
