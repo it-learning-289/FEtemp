@@ -13,34 +13,39 @@ function displayData() {
         console.error("No Auth Token found.");
         return;
     }
-   
-
+    //show list shoe
     showShoes(authToken);
-    //search id 
-    document.getElementById("searchButton").addEventListener("click", function(){
-        searchWithAuth(authToken);
 
-    });
+    //search id shoe
+    search(authToken);
+   
 
 }
 
 
-//show shoes
+//show list shoes
 const productList = document.getElementById("productList");
 const pagination = document.getElementById("pagination");
 const searchResults = document.getElementById("searchResults");
 
 function searchWithAuth(authToken) {
-    search(authToken);
+    searchID(authToken);
 }
 
 function search(authToken) {
+    document.getElementById("searchButton").addEventListener("click", function () {
+        searchWithAuth(authToken);
+
+    });
+}
+
+function searchID(authToken) {
     var input, searchID
     input = document.getElementById('searchInput');
     searchID = input.value;
     console.log(searchID);
-    
-  
+
+
     // Xóa các kết quả tìm kiếm trước đó
     searchResults.innerHTML = '';
     Options = {
@@ -50,7 +55,7 @@ function search(authToken) {
         }
     }
     // Gửi yêu cầu tới API
-    fetch('http://10.110.69.13:8081/api/shoes/' + searchID,Options)
+    fetch('http://10.110.69.13:8081/api/shoes/' + searchID, Options)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -58,8 +63,7 @@ function search(authToken) {
             return response.json();
         })
         .then(data => {
-            console.log(data);
-
+            console.log(`data - search id ${data}`);
             productList.style.display = "none";
             pagination.style.display = "none";
 
@@ -69,6 +73,10 @@ function search(authToken) {
                         <td>${data.name}</td>
                         <td>${data.price}</td>
                         <td>${data.category}</td>
+                        <td>
+                            <button class="edit-btn">Edit</button>
+                            <button class="delete-btn">Delete</button>
+                        </td>
                      `;
             searchResults.appendChild(row);
         })
@@ -80,7 +88,6 @@ function search(authToken) {
 function showShoes(authToken) {
     let currentPage = 1; // Current page
     const maxPagesToShow = 10; // Maximum number of pages to show
-   
 
     // Function to fetch products for a specific page
     function fetchProducts(page) {
@@ -123,6 +130,10 @@ function showShoes(authToken) {
                         <td>${product.name}</td>
                         <td>${product.price}</td>
                         <td>${product.categories}</td>
+                        <td>
+                            <button class="edit-btn">Edit</button>
+                            <button class="delete-btn">Delete</button>
+                        </td>
                      `;
             productList.appendChild(row);
         });
@@ -199,8 +210,7 @@ function logout() {
     location.reload();
 }
 
-//click button to log out
-document.getElementById("logoutButton").addEventListener("click", logout);
+
 
 // Check if user is logged in on page load
 window.onload = function () {
@@ -266,5 +276,9 @@ document.getElementById("registerForm").addEventListener("submit", function (eve
         })
         .catch(error => console.error("Error registering:", error));
 });
+
+//Log out
+document.getElementById("logoutButton").addEventListener("click", logout);
+
 
 

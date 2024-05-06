@@ -11,7 +11,6 @@
 <body>
     <div id="container" class="container">
         <div class="form-container">
-
             <form id="loginForm" class="form">
                 <h2>Login</h2>
                 <div class="form-group">
@@ -41,7 +40,8 @@
         </div>
     </div>
 
-    <div id="dataContainer">
+    <div id="dataContainer" >
+    <!-- <div id="styled-table" > -->
         <h2>Shoes Tabble</h2> 
 
         <div class="search-container">
@@ -50,13 +50,15 @@
         </div>
 
         <button id="logoutButton">Logout</button>
-        <table id="productTable">
+        <!-- <table id="productTable"> -->
+        <table class="styled-table">
             <thead>
                 <tr>
                     <th>ID</th>
                     <th>Name</th>
                     <th>Price</th>
                     <th>Categories</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody id = "searchResults">
