@@ -73,6 +73,16 @@ button:hover {
 #dataList li {
     margin-bottom: 10px;
 }
+
+#dataSearch {
+    list-style-type: none;
+    padding: 0;
+}
+
+#dataSearch li {
+    margin-bottom: 10px;
+}
+
 .container {
     max-width: 800px;
     margin: 20px auto;
@@ -113,6 +123,10 @@ tr:hover {
     margin-top: 20px;
     margin: auto; /* Thêm margin: auto; để căn giữa */
 }
+
+
+
+
 
 .pagination button {
     padding: 5px 10px;

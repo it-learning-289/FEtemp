@@ -13,23 +13,36 @@ function displayData() {
         console.error("No Auth Token found.");
         return;
     }
+   
+
     showShoes(authToken);
     //search id 
-document.getElementById("searchButton").addEventListener("click", search(authToken));
+    document.getElementById("searchButton").addEventListener("click", function(){
+        searchWithAuth(authToken);
+
+    });
 
 }
 
 
 //show shoes
+const productList = document.getElementById("productList");
+const pagination = document.getElementById("pagination");
+const searchResults = document.getElementById("searchResults");
+
+function searchWithAuth(authToken) {
+    search(authToken);
+}
 
 function search(authToken) {
-    var input, filter, ul, li, a, i, txtValue;
+    var input, searchID
     input = document.getElementById('searchInput');
-    filter = input.value.toUpperCase();
-    ul = document.getElementById("searchResults");
+    searchID = input.value;
+    console.log(searchID);
     
+  
     // Xóa các kết quả tìm kiếm trước đó
-    ul.innerHTML = '';
+    searchResults.innerHTML = '';
     Options = {
         method: "GET",
         headers: {
@@ -37,7 +50,7 @@ function search(authToken) {
         }
     }
     // Gửi yêu cầu tới API
-    fetch('http://10.110.69.13:8081/api/shoes/' + filter,Options)
+    fetch('http://10.110.69.13:8081/api/shoes/' + searchID,Options)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -46,29 +59,28 @@ function search(authToken) {
         })
         .then(data => {
             console.log(data);
-           
+
+            productList.style.display = "none";
+            pagination.style.display = "none";
+
             const row = document.createElement("tr");
             row.innerHTML = `
                         <td>${data.id}</td>
                         <td>${data.name}</td>
                         <td>${data.price}</td>
-                        <td>${data.categories}</td>
+                        <td>${data.category}</td>
                      `;
-            ul.appendChild(row);
+            searchResults.appendChild(row);
         })
         .catch(error => {
             console.error('There was a problem with the fetch operation:', error);
         });
 }
 
-
-
 function showShoes(authToken) {
-
     let currentPage = 1; // Current page
     const maxPagesToShow = 10; // Maximum number of pages to show
-    const productList = document.getElementById("productList");
-    const pagination = document.getElementById("pagination");
+   
 
     // Function to fetch products for a specific page
     function fetchProducts(page) {
