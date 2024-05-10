@@ -15,13 +15,10 @@ function displayData() {
     }
     //show list shoe
     showShoes(authToken);
-
     //search id shoe
     search(authToken);
-   
-
+    
 }
-
 
 //show list shoes
 const productList = document.getElementById("productList");
@@ -44,7 +41,6 @@ function searchID(authToken) {
     input = document.getElementById('searchInput');
     searchID = input.value;
     console.log(searchID);
-
 
     // Xóa các kết quả tìm kiếm trước đó
     searchResults.innerHTML = '';
@@ -75,10 +71,13 @@ function searchID(authToken) {
                         <td>${data.category}</td>
                         <td>
                             <button class="edit-btn">Edit</button>
-                            <button class="delete-btn">Delete</button>
+                            <button class="delete-btn" delShoe-id="${data.id}">Delete</button>
                         </td>
                      `;
             searchResults.appendChild(row);
+
+            //handle delete shoe
+        handleDelShoe(authToken);
         })
         .catch(error => {
             console.error('There was a problem with the fetch operation:', error);
@@ -117,9 +116,9 @@ function showShoes(authToken) {
             })
     }
 
-    // Function to display products
+    // Function to display list products
     function displayProducts(data) {
-        console.log(data);
+        // console.log(data);
         productList.innerHTML = ""; // Clear previous content
 
         // Populate productList with product data from the API
@@ -132,11 +131,15 @@ function showShoes(authToken) {
                         <td>${product.categories}</td>
                         <td>
                             <button class="edit-btn">Edit</button>
-                            <button class="delete-btn">Delete</button>
+                            <button class="delete-btn" delShoe-id="${product.id}">Delete</button>
                         </td>
                      `;
             productList.appendChild(row);
         });
+
+        //handle delete shoe
+        handleDelShoe(authToken);
+  
     }
 
     // Function to display pagination controls
@@ -204,12 +207,49 @@ function showShoes(authToken) {
     fetchProducts(currentPage);
 }
 
+//handle deleteShoe
+function handleDelShoe(authToken) {
+    const deleteButtons = document.querySelectorAll('.delete-btn');
+    console.log(deleteButtons);
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const productId = this.getAttribute('delShoe-id');
+            console.log(productId);
+            deleteShoe(authToken,productId);
+           
+        });
+    });
+}
+
+//function delete shoe
+function deleteShoe(authToken,id) {
+    Options = {
+        method: "DELETE",
+        headers: {
+            "TUNGTV_AUTHEN_TOKEN": authToken
+        }
+    }
+    // Gửi yêu cầu tới API
+    fetch('http://10.110.69.13:8081/api/shoes/' + id, Options)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            location.reload();
+        })
+}
+
+//
+function addShoe() {
+    
+
+}
+
 //function log out
 function logout() {
     localStorage.removeItem("tungtv_authen_token");
     location.reload();
 }
-
 
 
 // Check if user is logged in on page load
