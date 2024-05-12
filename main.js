@@ -78,7 +78,6 @@ function searchID(authToken) {
 
             //handle delete shoe
         handleDelShoe(authToken);
-        handleAddShoe(authToken);
         })
         .catch(error => {
             console.error('There was a problem with the fetch operation:', error);
@@ -240,10 +239,10 @@ function handleAddShoe(authToken){
         addShoe(authToken,product);
 
          // Close the modal after form submission (optional)
-        //  setTimeout(function() {
+         setTimeout(function() {
+            showToast("adding success.");
              modal.style.display = "none";
-             showToast("adding success.");
-        //  }, 4000); // Close modal after 2 seconds (2000 milliseconds        
+         }, 4000); // Close modal after 2 seconds (2000 milliseconds        
     
     });
 }
@@ -263,7 +262,7 @@ function addShoe(authToken,product) {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-            location.reload();
+            // location.reload();
         })
 }
 
