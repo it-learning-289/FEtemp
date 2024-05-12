@@ -17,7 +17,9 @@ function displayData() {
     showShoes(authToken);
     //search id shoe
     search(authToken);
-    
+    handleAddShoe(authToken);
+
+
 }
 
 //show list shoes
@@ -77,7 +79,10 @@ function searchID(authToken) {
             searchResults.appendChild(row);
 
             //handle delete shoe
-        handleDelShoe(authToken);
+            handleDelShoe(authToken);
+            // handleAddShoe(authToken);
+
+
         })
         .catch(error => {
             console.error('There was a problem with the fetch operation:', error);
@@ -139,8 +144,8 @@ function showShoes(authToken) {
 
         //handle delete shoe
         handleDelShoe(authToken);
-        handleAddShoe(authToken);
-  
+        // handleAddShoe(authToken);
+
     }
 
     // Function to display pagination controls
@@ -213,42 +218,44 @@ function handleDelShoe(authToken) {
     const deleteButtons = document.querySelectorAll('.delete-btn');
     console.log(deleteButtons);
     deleteButtons.forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
             const productId = this.getAttribute('delShoe-id');
             console.log(productId);
-            deleteShoe(authToken,productId);
-           
+            deleteShoe(authToken, productId);
+
         });
     });
 }
 
 // Handle form submission
-function handleAddShoe(authToken){
-    document.getElementById("addProductForm").addEventListener("submit", function(event) {
+function handleAddShoe(authToken) {
+    document.getElementById("addProductForm").addEventListener("submit", function (event) {
         event.preventDefault(); // Prevent form submission
         var name = document.getElementById("productName").value;
         var price = document.getElementById("productPrice").value;
         var category = document.getElementById("productCategory").value;
-    
-        let product = { 
-            "name" : name,
-            "price" : price, 
-            "category" : category 
-        };
-        // console.log(product);
-        addShoe(authToken,product);
 
-         // Close the modal after form submission (optional)
-         setTimeout(function() {
-            showToast("adding success.");
-             modal.style.display = "none";
-         }, 4000); // Close modal after 2 seconds (2000 milliseconds        
-    
+        let product = {
+            "name": name,
+            "price": price,
+            "category": category
+        };
+
+        console.log(product);
+        addShoe(authToken, product);
+
+        // Close the modal after form submission (optional)
+        showToast("adding success.");
+        modal.style.display = "none";
+        setTimeout(function () {
+            location.reload();
+        }, 500); // Close modal after 2 seconds (2000 milliseconds        
+
     });
 }
 
 //function add shoe
-function addShoe(authToken,product) {
+function addShoe(authToken, product) {
     Options = {
         method: "POST",
         headers: {
@@ -262,13 +269,15 @@ function addShoe(authToken,product) {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-            // location.reload();
+            // setTimeout(()=>{
+            //     location.reload();
+            // },500)
         })
 }
 
 
 //function delete shoe
-function deleteShoe(authToken,id) {
+function deleteShoe(authToken, id) {
     Options = {
         method: "DELETE",
         headers: {
@@ -281,7 +290,10 @@ function deleteShoe(authToken,id) {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-            location.reload();
+            showToast("delete success");
+            setTimeout(() => {
+                location.reload();
+            }, 500)
         })
 }
 
@@ -297,7 +309,7 @@ function showToast(message) {
     var toast = document.getElementById("toast");
     toast.innerHTML = message;
     toast.className = "toast show";
-    setTimeout(function(){
+    setTimeout(function () {
         toast.className = toast.className.replace("show", "");
     }, 3000);
 }
@@ -383,17 +395,17 @@ var btn = document.getElementById("addProductBtn");
 var span = document.getElementsByClassName("close")[0];
 
 // When the user clicks on the button, open the modal
-btn.onclick = function() {
+btn.onclick = function () {
     modal.style.display = "block";
 }
 
 // When the user clicks on <span> (x), close the modal
-span.onclick = function() {
+span.onclick = function () {
     modal.style.display = "none";
 }
 
 // When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
+window.onclick = function (event) {
     if (event.target == modal) {
         modal.style.display = "none";
     }
