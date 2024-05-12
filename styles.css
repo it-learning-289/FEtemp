@@ -80,7 +80,7 @@ body, h1, h2, h3, h4, h5, h6, p, ul, ol, li, dl, dt, dd, pre, form, fieldset, in
 
 /* Modal styles */
 .modal {
-    display: block; /* Hidden by default */
+    display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
     left: 0;
@@ -145,6 +145,7 @@ body, h1, h2, h3, h4, h5, h6, p, ul, ol, li, dl, dt, dd, pre, form, fieldset, in
     background-color: #4CAF50; /* Green */
     color: white;
     padding: 12px 20px;
+    margin-top:10px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -314,6 +315,52 @@ tr:hover {
 
 #searchButton:hover {
     background-color: #45a049;
+}
+
+/* toast */
+.toast {
+    visibility: hidden;
+    min-width: 250px;
+    margin: auto;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 16px;
+    position: fixed;
+    z-index: 9999;
+    left: 50%;
+    bottom: 30px;
+    transform: translateX(-50%);
+    font-family: Arial, sans-serif;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.show {
+    visibility: visible;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@keyframes fadein {
+    from {
+        bottom: 0;
+        opacity: 0;
+    }
+    to {
+        bottom: 30px;
+        opacity: 1;
+    }
+}
+
+@keyframes fadeout {
+    from {
+        bottom: 30px;
+        opacity: 1;
+    }
+    to {
+        bottom: 0;
+        opacity: 0;
+    }
 }
 
 

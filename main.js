@@ -139,6 +139,7 @@ function showShoes(authToken) {
 
         //handle delete shoe
         handleDelShoe(authToken);
+        handleAddShoe(authToken);
   
     }
 
@@ -221,6 +222,51 @@ function handleDelShoe(authToken) {
     });
 }
 
+// Handle form submission
+function handleAddShoe(authToken){
+    document.getElementById("addProductForm").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent form submission
+        var name = document.getElementById("productName").value;
+        var price = document.getElementById("productPrice").value;
+        var category = document.getElementById("productCategory").value;
+    
+        let product = { 
+            "name" : name,
+            "price" : price, 
+            "category" : category 
+        };
+        // console.log(product);
+        addShoe(authToken,product);
+
+         // Close the modal after form submission (optional)
+         setTimeout(function() {
+            showToast("adding success.");
+             modal.style.display = "none";
+         }, 4000); // Close modal after 2 seconds (2000 milliseconds        
+    
+    });
+}
+
+//function add shoe
+function addShoe(authToken,product) {
+    Options = {
+        method: "POST",
+        headers: {
+            "TUNGTV_AUTHEN_TOKEN": authToken
+        },
+        body: JSON.stringify({ name: product.name, price: product.price, category: product.category })
+    }
+    // Gửi yêu cầu tới API
+    fetch('http://10.110.69.13:8081/api/shoes/', Options)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            // location.reload();
+        })
+}
+
+
 //function delete shoe
 function deleteShoe(authToken,id) {
     Options = {
@@ -239,11 +285,6 @@ function deleteShoe(authToken,id) {
         })
 }
 
-//
-function addShoe() {
-    
-
-}
 
 //function log out
 function logout() {
@@ -251,6 +292,15 @@ function logout() {
     location.reload();
 }
 
+//show toast - message
+function showToast(message) {
+    var toast = document.getElementById("toast");
+    toast.innerHTML = message;
+    toast.className = "toast show";
+    setTimeout(function(){
+        toast.className = toast.className.replace("show", "");
+    }, 3000);
+}
 
 // Check if user is logged in on page load
 window.onload = function () {
@@ -319,6 +369,38 @@ document.getElementById("registerForm").addEventListener("submit", function (eve
 
 //Log out
 document.getElementById("logoutButton").addEventListener("click", logout);
+
+
+
+
+// Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("addProductBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on the button, open the modal
+btn.onclick = function() {
+    modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+
+
 
 
 
