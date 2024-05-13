@@ -72,7 +72,7 @@ function searchID(authToken) {
                         <td>${data.price}</td>
                         <td>${data.category}</td>
                         <td>
-                            <button class="edit-btn">Edit</button>
+                            <button class="edit-btn" editShoe-id="${data.id}">Edit</button>
                             <button class="delete-btn" delShoe-id="${data.id}">Delete</button>
                         </td>
                      `;
@@ -81,7 +81,8 @@ function searchID(authToken) {
             //handle delete shoe
             handleDelShoe(authToken);
             // handleAddShoe(authToken);
-
+            //handle edit shoe
+            handleEditShoe(authToken);
 
         })
         .catch(error => {
@@ -135,7 +136,7 @@ function showShoes(authToken) {
                         <td>${product.price}</td>
                         <td>${product.categories}</td>
                         <td>
-                            <button class="edit-btn">Edit</button>
+                            <button class="edit-btn" editShoe-id="${product.id}">Edit</button>
                             <button class="delete-btn" delShoe-id="${product.id}">Delete</button>
                         </td>
                      `;
@@ -145,6 +146,9 @@ function showShoes(authToken) {
         //handle delete shoe
         handleDelShoe(authToken);
         // handleAddShoe(authToken);
+
+        //handle edit shoe
+        handleEditShoe(authToken);
 
     }
 
@@ -216,7 +220,7 @@ function showShoes(authToken) {
 //handle deleteShoe
 function handleDelShoe(authToken) {
     const deleteButtons = document.querySelectorAll('.delete-btn');
-    console.log(deleteButtons);
+    // console.log(deleteButtons);
     deleteButtons.forEach(button => {
         button.addEventListener('click', function () {
             const productId = this.getAttribute('delShoe-id');
@@ -226,6 +230,74 @@ function handleDelShoe(authToken) {
         });
     });
 }
+
+
+//handle edit shoe
+function handleEditShoe(authToken) {
+    // Event listener for Edit button in each row
+    const editButtons = document.querySelectorAll('.edit-btn');
+    editButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const productId = this.getAttribute('editShoe-id');
+            console.log(productId);
+            openEditProductModal();
+
+            const knownTd = document.querySelector('tr td:nth-child(5)'); // For example, the second <td>
+            // console.log(knownTd);
+            // Navigate from the known <td> to its parent <tr>
+            const tr = knownTd.parentElement;
+
+            // Get all <td> elements within the <tr>
+            const tds = tr.querySelectorAll('td');
+
+            // Loop through all <td> elements and get their values
+            const values = [];
+            tds.forEach(td => {
+                values.push(td.textContent.trim());
+            });
+            // let product = {
+            //     "name" : values[1],
+            //     "price": values[2],
+            //     "category": values[3]
+            // }
+            let form  = document.querySelector("#editProductForm");
+            form.querySelector("#productName").setAttribute("value",values[1]);
+            form.querySelector("#productPrice").setAttribute("value",values[2]);
+            form.querySelector("#productCategory").setAttribute("value",values[3]);
+            
+            
+            form.addEventListener("submit", function (event) {
+                event.preventDefault(); // Prevent form submission
+                var name = form.querySelector("#productName").value;
+                var price = form.querySelector("#productPrice").value;
+                var category = form.querySelector("#productCategory").value;
+        
+                let product = {
+                    "name": name,
+                    "price": price,
+                    "category": category
+                };
+        
+                console.log(product);
+                editShoe(authToken,productId,product);
+                // // Close the modal after form submission (optional)
+                // showToast("adding success.");
+                // modal.style.display = "none";
+                // setTimeout(function () {
+                //     location.reload();
+                // }, 500); // Close modal after 2 seconds (2000 milliseconds        
+        
+            });
+
+
+            // console.log(product);
+            // editShoe(authToken, productId,product);
+
+        });
+    });
+}
+
+
 
 // Handle form submission
 function handleAddShoe(authToken) {
@@ -297,6 +369,41 @@ function deleteShoe(authToken, id) {
         })
 }
 
+//function edit shoe
+function editShoe(authToken, id, product) {
+    Options = {
+        method: "PATCH",
+        headers: {
+            "TUNGTV_AUTHEN_TOKEN": authToken
+        },
+        body: JSON.stringify({ name: product.name, price: product.price, category: product.category })
+    }
+    // Gửi yêu cầu tới API
+    fetch('http://10.110.69.13:8081/api/shoes/' + id, Options)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            setTimeout(() => {
+                location.reload();
+            }, 500)
+        })
+}
+
+// Function to open Edit Product modal
+function openEditProductModal(productId) {
+    var editModal = document.getElementById("editProductModal");
+    editModal.style.display = "block";
+
+    // Populate the form fields with product data for editing
+    // You may need to fetch product data based on productId and populate the form fields accordingly
+}
+
+// Function to close Edit Product modal
+function closeEditProductModal() {
+    var editModal = document.getElementById("editProductModal");
+    editModal.style.display = "none";
+}
 
 //function log out
 function logout() {
@@ -413,6 +520,23 @@ window.onclick = function (event) {
 
 
 
+// Event listener for closing Edit Product modal (click on close button)
+document.querySelector("#editProductModal .close").addEventListener("click", function () {
+    closeEditProductModal();
+});
 
+// Event listener for closing Edit Product modal (click outside the modal)
+window.addEventListener("click", function (event) {
+    var editModal = document.getElementById("editProductModal");
+    if (event.target == editModal) {
+        closeEditProductModal();
+    }
+});
 
+// Event listener for form submission
+document.getElementById("editProductForm").addEventListener("submit", function (event) {
+    event.preventDefault(); // Prevent form submission
+    // Get form data and handle it accordingly
+    closeEditProductModal();
+});
 
