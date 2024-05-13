@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login and Register</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -41,39 +42,59 @@
         </div>
     </div>
 
-    <div id="dataContainer" >
-        <div id="toast" class="toast"></div> 
-    <!-- <div id="styled-table" > -->
-        <h2>Shoes Tabble</h2> 
+    <div id="dataContainer">
+        <div id="toast" class="toast"></div>
+        <!-- <div id="styled-table" > -->
+        <h2>Shoes Tabble</h2>
 
         <div class="search-container">
             <input type="text" id="searchInput" placeholder="Search ID...">
             <button id="searchButton">Search</button>
         </div>
-        
-        <div id = "tools">
+
+        <div id="tools">
             <button id="addProductBtn" class="add-product-btn">+</button> <!-- Add Product Button -->
             <button id="logoutButton">Logout</button>
         </div>
         <!-- modal add product -->
 
-        <div id="myModal" class="modal">
+        <div id="myModal" class="modal-add">
             <div class="modal-content">
                 <span class="close">&times;</span>
                 <h2>Add Product</h2>
                 <form id="addProductForm">
                     <label for="productName">Name:</label>
-                    <input type="text" id="productName" name="productName"placeholder="Name">
+                    <input type="text" id="productName" name="productName" placeholder="Name">
                     <label for="productPrice">Price:</label>
-                    <input type="text" id="productPrice" name="productPrice"placeholder="Price">
+                    <input type="text" id="productPrice" name="productPrice" placeholder="Price">
                     <label for="productCategory">Category:</label>
                     <input type="text" id="productCategory" name="productCategory" placeholder="Category">
                     <button type="submit" class="submit-btn">Submit</button>
                 </form>
             </div>
         </div>
+
+        <!-- Modal for Edit Product -->
+        <div id="editProductModal" class="modal-edit">
+            <div class="modal-content-edit">
+                <span class="close">&times;</span>
+                <h2>Edit Product</h2>
+                <form id="editProductForm">
+                    <!-- Edit Product Form Inputs -->
+                    <label for="productName">Name:</label>
+                    <input type="text" id="productName" name="productName" >
+                    <label for="productPrice">Price:</label>
+                    <input type="text" id="productPrice" name="productPrice" >
+                    <label for="productCategory">Category:</label>
+                    <input type="text" id="productCategory" name="productCategory">
+                    <button type="submit" class="submit-btn">Submit</button>
+                </form>
+            </div>
+        </div>
+
+
         <!-- <table id="productTable"> -->
-            <table class="styled-table">
+        <table class="styled-table">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -83,24 +104,24 @@
                     <th>Action</th>
                 </tr>
             </thead>
-            <tbody id = "searchResults">
+            <tbody id="searchResults">
                 <tr id="dataSearch"></tr>
             </tbody>
 
-            <tbody id="productList" >
+            <tbody id="productList">
                 <tr id="dataList"></tr>
-               <!-- Table rows will be added here --> 
-                
-           </tbody> 
-          
+                <!-- Table rows will be added here -->
+
+            </tbody>
+
         </table>
         <br>
         <div id="pagination"></div>
 
-        
 
 
-    
+
+
     </div>
 
     <script src="main.js"></script>
