@@ -15,8 +15,11 @@ function displayData() {
     }
     //show list shoe
     showShoes(authToken);
+
     //search id shoe
     search(authToken);
+
+    //add product
     handleAddShoe(authToken);
 
 
@@ -80,7 +83,7 @@ function searchID(authToken) {
 
             //handle delete shoe
             handleDelShoe(authToken);
-            // handleAddShoe(authToken);
+        
             //handle edit shoe
             handleEditShoe(authToken);
 
@@ -238,34 +241,35 @@ function handleEditShoe(authToken) {
     const editButtons = document.querySelectorAll('.edit-btn');
     editButtons.forEach(button => {
         button.addEventListener('click', function () {
+            const grandparentButton = button.parentElement.parentElement;
+            console.log(grandparentButton);
             const productId = this.getAttribute('editShoe-id');
             console.log(productId);
             openEditProductModal();
 
-            const knownTd = document.querySelector('tr td:nth-child(5)'); // For example, the second <td>
+            // const knownTd = grandparentButton.querySelector('tr td:nth-child(5)'); // For example, the second <td>
             // console.log(knownTd);
-            // Navigate from the known <td> to its parent <tr>
-            const tr = knownTd.parentElement;
+            // // Navigate from the known <td> to its parent <tr>
+            // const tr = knownTd.parentElement;
+          
+            // // Get all <td> elements within the <tr>
+            // const tds = tr.querySelectorAll('td');
 
-            // Get all <td> elements within the <tr>
-            const tds = tr.querySelectorAll('td');
+            const tds = grandparentButton.querySelectorAll('td');
 
             // Loop through all <td> elements and get their values
             const values = [];
             tds.forEach(td => {
                 values.push(td.textContent.trim());
             });
-            // let product = {
-            //     "name" : values[1],
-            //     "price": values[2],
-            //     "category": values[3]
-            // }
+            console.log(values);
+
             let form  = document.querySelector("#editProductForm");
             form.querySelector("#productName").setAttribute("value",values[1]);
             form.querySelector("#productPrice").setAttribute("value",values[2]);
             form.querySelector("#productCategory").setAttribute("value",values[3]);
             
-            
+            //listen submit form edit 
             form.addEventListener("submit", function (event) {
                 event.preventDefault(); // Prevent form submission
                 var name = form.querySelector("#productName").value;
@@ -341,9 +345,6 @@ function addShoe(authToken, product) {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-            // setTimeout(()=>{
-            //     location.reload();
-            // },500)
         })
 }
 
@@ -365,7 +366,7 @@ function deleteShoe(authToken, id) {
             showToast("delete success");
             setTimeout(() => {
                 location.reload();
-            }, 500)
+            }, 1000)
         })
 }
 
@@ -384,9 +385,10 @@ function editShoe(authToken, id, product) {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
+            showToast("edit success");
             setTimeout(() => {
                 location.reload();
-            }, 500)
+            }, 1000)
         })
 }
 
@@ -486,12 +488,6 @@ document.getElementById("registerForm").addEventListener("submit", function (eve
         .catch(error => console.error("Error registering:", error));
 });
 
-//Log out
-document.getElementById("logoutButton").addEventListener("click", logout);
-
-
-
-
 // Get the modal
 var modal = document.getElementById("myModal");
 
@@ -518,8 +514,6 @@ window.onclick = function (event) {
     }
 }
 
-
-
 // Event listener for closing Edit Product modal (click on close button)
 document.querySelector("#editProductModal .close").addEventListener("click", function () {
     closeEditProductModal();
@@ -540,3 +534,6 @@ document.getElementById("editProductForm").addEventListener("submit", function (
     closeEditProductModal();
 });
 
+
+//Log out
+document.getElementById("logoutButton").addEventListener("click", logout);
