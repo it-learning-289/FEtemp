@@ -22,7 +22,6 @@ function displayData() {
     //add product
     handleAddShoe(authToken);
 
-
 }
 
 //show list shoes
@@ -148,7 +147,6 @@ function showShoes(authToken) {
 
         //handle delete shoe
         handleDelShoe(authToken);
-        // handleAddShoe(authToken);
 
         //handle edit shoe
         handleEditShoe(authToken);
@@ -237,7 +235,8 @@ function handleDelShoe(authToken) {
 
 //handle edit shoe
 function handleEditShoe(authToken) {
-    // Event listener for Edit button in each row
+
+    //  handle submition edit
     const editButtons = document.querySelectorAll('.edit-btn');
     editButtons.forEach(button => {
         button.addEventListener('click', function () {
@@ -246,14 +245,6 @@ function handleEditShoe(authToken) {
             const productId = this.getAttribute('editShoe-id');
             console.log(productId);
             openEditProductModal();
-
-            // const knownTd = grandparentButton.querySelector('tr td:nth-child(5)'); // For example, the second <td>
-            // console.log(knownTd);
-            // // Navigate from the known <td> to its parent <tr>
-            // const tr = knownTd.parentElement;
-          
-            // // Get all <td> elements within the <tr>
-            // const tds = tr.querySelectorAll('td');
 
             const tds = grandparentButton.querySelectorAll('td');
 
@@ -284,24 +275,11 @@ function handleEditShoe(authToken) {
         
                 console.log(product);
                 editShoe(authToken,productId,product);
-                // // Close the modal after form submission (optional)
-                // showToast("adding success.");
-                // modal.style.display = "none";
-                // setTimeout(function () {
-                //     location.reload();
-                // }, 500); // Close modal after 2 seconds (2000 milliseconds        
-        
             });
-
-
-            // console.log(product);
-            // editShoe(authToken, productId,product);
 
         });
     });
 }
-
-
 
 // Handle form submission
 function handleAddShoe(authToken) {
@@ -325,7 +303,7 @@ function handleAddShoe(authToken) {
         modal.style.display = "none";
         setTimeout(function () {
             location.reload();
-        }, 500); // Close modal after 2 seconds (2000 milliseconds        
+        }, 1000); // Close modal after 2 seconds (2000 milliseconds        
 
     });
 }
@@ -533,6 +511,42 @@ document.getElementById("editProductForm").addEventListener("submit", function (
     // Get form data and handle it accordingly
     closeEditProductModal();
 });
+
+
+
+// Toggle the display of the filter panel
+document.getElementById("filterPriceBtn").addEventListener("click", function() {
+    var filterPanel = document.getElementById("filterPricePanel");
+    if (filterPanel.style.display === "none" || filterPanel.style.display === "") {
+        filterPanel.style.display = "block";
+    } else {
+        filterPanel.style.display = "none";
+    }
+});
+
+// Update the displayed price range values
+function updatePriceRange() {
+    var minPrice = document.getElementById("minPriceRange").value;
+    var maxPrice = document.getElementById("maxPriceRange").value;
+    
+    document.getElementById("minPriceLabel").textContent = minPrice;
+    document.getElementById("maxPriceLabel").textContent = maxPrice;
+}
+
+// Handle form submission
+document.getElementById("filterPriceForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent form submission
+    var minPrice = document.getElementById("minPriceRange").value;
+    var maxPrice = document.getElementById("maxPriceRange").value;
+    
+    // You can handle the form data here, for example, filter the products by price range
+    console.log("Min Price: " + minPrice);
+    console.log("Max Price: " + maxPrice);
+
+    // Optionally, hide the filter panel after applying the filter
+    document.getElementById("filterPricePanel").style.display = "none";
+});
+
 
 
 //Log out
