@@ -47,84 +47,107 @@
         <!-- <div id="styled-table" > -->
         <h2>Shoes Tabble</h2>
 
-        <div class="search-container">
-            <input type="text" id="searchInput" placeholder="Search ID...">
-            <button id="searchButton">Search</button>
-        </div>
+        <div>
 
-        <div id="tools">
-            <button id="addProductBtn" class="add-product-btn">+</button> <!-- Add Product Button -->
-            <button id="logoutButton">Logout</button>
-        </div>
-        <!-- modal add product -->
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search ID...">
+                <button id="searchButton">Search</button>
+            </div>
 
-        <div id="myModal" class="modal-add">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>Add Product</h2>
-                <form id="addProductForm">
-                    <label for="productName">Name:</label>
-                    <input type="text" id="productName" name="productName" placeholder="Name">
-                    <label for="productPrice">Price:</label>
-                    <input type="text" id="productPrice" name="productPrice" placeholder="Price">
-                    <label for="productCategory">Category:</label>
-                    <input type="text" id="productCategory" name="productCategory" placeholder="Category">
-                    <button type="submit" class="submit-btn">Submit</button>
+            <!-- Filter Price Button -->
+            <button id="filterPriceBtn" class="filter-price-btn">Filter Price</button>
+
+            <!-- Filter Price Panel -->
+            <div id="filterPricePanel" class="filter-panel">
+                <form id="filterPriceForm">
+                    <label for="priceRange">Price Range:</label>
+                    <div class="range-container">
+                        <input type="range" id="minPriceRange" name="minPriceRange" min="0" max="1000" step="10"
+                            value="0" oninput="updatePriceRange()">
+                        <input type="range" id="maxPriceRange" name="maxPriceRange" min="0" max="1000" step="10"
+                            value="1000" oninput="updatePriceRange()">
+                    </div>
+                    <p>Min Price: $<span id="minPriceLabel">0</span></p>
+                    <p>Max Price: $<span id="maxPriceLabel">1000</span></p>
+
+                    <button type="submit" class="submit-btn">Apply Filter</button>
                 </form>
             </div>
-        </div>
 
-        <!-- Modal for Edit Product -->
-        <div id="editProductModal" class="modal-edit">
-            <div class="modal-content-edit">
-                <span class="close">&times;</span>
-                <h2>Edit Product</h2>
-                <form id="editProductForm">
-                    <!-- Edit Product Form Inputs -->
-                    <label for="productName">Name:</label>
-                    <input type="text" id="productName" name="productName" >
-                    <label for="productPrice">Price:</label>
-                    <input type="text" id="productPrice" name="productPrice" >
-                    <label for="productCategory">Category:</label>
-                    <input type="text" id="productCategory" name="productCategory">
-                    <button type="submit" class="submit-btn">Submit</button>
-                </form>
+            </didiv>
+            <div id="tools">
+                <button id="addProductBtn" class="add-product-btn">+</button> <!-- Add Product Button -->
+                <button id="logoutButton">Logout</button>
             </div>
+            <!-- modal add product -->
+
+            <div id="myModal" class="modal-add">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Add Product</h2>
+                    <form id="addProductForm">
+                        <label for="productName">Name:</label>
+                        <input type="text" id="productName" name="productName" placeholder="Name">
+                        <label for="productPrice">Price:</label>
+                        <input type="text" id="productPrice" name="productPrice" placeholder="Price">
+                        <label for="productCategory">Category:</label>
+                        <input type="text" id="productCategory" name="productCategory" placeholder="Category">
+                        <button type="submit" class="submit-btn">Submit</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Modal for Edit Product -->
+            <div id="editProductModal" class="modal-edit">
+                <div class="modal-content-edit">
+                    <span class="close">&times;</span>
+                    <h2>Edit Product</h2>
+                    <form id="editProductForm">
+                        <!-- Edit Product Form Inputs -->
+                        <label for="productName">Name:</label>
+                        <input type="text" id="productName" name="productName">
+                        <label for="productPrice">Price:</label>
+                        <input type="text" id="productPrice" name="productPrice">
+                        <label for="productCategory">Category:</label>
+                        <input type="text" id="productCategory" name="productCategory">
+                        <button type="submit" class="submit-btn">Submit</button>
+                    </form>
+                </div>
+            </div>
+
+
+            <!-- <table id="productTable"> -->
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Categories</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="searchResults">
+                    <tr id="dataSearch"></tr>
+                </tbody>
+
+                <tbody id="productList">
+                    <tr id="dataList"></tr>
+                    <!-- Table rows will be added here -->
+
+                </tbody>
+
+            </table>
+            <br>
+            <div id="pagination"></div>
+
+
+
+
+
         </div>
 
-
-        <!-- <table id="productTable"> -->
-        <table class="styled-table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Price</th>
-                    <th>Categories</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody id="searchResults">
-                <tr id="dataSearch"></tr>
-            </tbody>
-
-            <tbody id="productList">
-                <tr id="dataList"></tr>
-                <!-- Table rows will be added here -->
-
-            </tbody>
-
-        </table>
-        <br>
-        <div id="pagination"></div>
-
-
-
-
-
-    </div>
-
-    <script src="main.js"></script>
+        <script src="main.js"></script>
 </body>
 
 </html>
