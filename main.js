@@ -524,10 +524,19 @@ document.getElementById("filterPriceBtn").addEventListener("click", function() {
     }
 });
 
-// Update the displayed price range values
+// Update the displayed price range values and ensure ranges do not overlap
 function updatePriceRange() {
-    var minPrice = document.getElementById("minPriceRange").value;
-    var maxPrice = document.getElementById("maxPriceRange").value;
+    var minPriceRange = document.getElementById("minPriceRange");
+    var maxPriceRange = document.getElementById("maxPriceRange");
+    
+    var minPrice = parseInt(minPriceRange.value);
+    var maxPrice = parseInt(maxPriceRange.value);
+    
+    // Ensure the min value is always less than the max value
+    if (minPrice > maxPrice) {
+        minPriceRange.value = maxPrice;
+        minPrice = maxPrice;
+    }
     
     document.getElementById("minPriceLabel").textContent = minPrice;
     document.getElementById("maxPriceLabel").textContent = maxPrice;
@@ -546,6 +555,7 @@ document.getElementById("filterPriceForm").addEventListener("submit", function(e
     // Optionally, hide the filter panel after applying the filter
     document.getElementById("filterPricePanel").style.display = "none";
 });
+
 
 
 
