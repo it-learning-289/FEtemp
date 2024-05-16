@@ -16,11 +16,16 @@ function displayData() {
     //show list shoe
     showShoes(authToken);
 
+    //filter price shoe
+    filterShoe(authToken);
+
     //search id shoe
     search(authToken);
 
     //add product
     handleAddShoe(authToken);
+
+
 
 }
 
@@ -28,6 +33,7 @@ function displayData() {
 const productList = document.getElementById("productList");
 const pagination = document.getElementById("pagination");
 const searchResults = document.getElementById("searchResults");
+const filterResults = document.getElementById("filterResults");
 
 function searchWithAuth(authToken) {
     searchID(authToken);
@@ -91,7 +97,6 @@ function searchID(authToken) {
             console.error('There was a problem with the fetch operation:', error);
         });
 }
-
 function showShoes(authToken) {
     let currentPage = 1; // Current page
     const maxPagesToShow = 10; // Maximum number of pages to show
@@ -104,6 +109,38 @@ function showShoes(authToken) {
                 "TUNGTV_AUTHEN_TOKEN": authToken
             }
         }
+        //handle submit for filter shoe
+        document.getElementById("filterPriceForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent form submission
+            var minPrice = document.getElementById("minPriceRange").value;
+            var maxPrice = document.getElementById("maxPriceRange").value;
+            var page=1;
+            // You can handle the form data here, for example, filter the products by price range
+            console.log("Min Price: " + minPrice);
+            console.log("Max Price: " + maxPrice);
+        
+            // Optionally, hide the filter panel after applying the filter
+            document.getElementById("filterPricePanel").style.display = "none";
+            
+               // Gửi yêu cầu tới API
+            fetch(`http://10.110.69.13:8081/api/shoes?page=${page}&min_number=${minPrice}&max_number=${maxPrice}`, Options)
+            .then(response => {
+                if (response.status !== 401) {
+                    return response.json();
+                }
+                alert("Unauthen!!!");
+                logout();
+
+            })
+            .then(data => {
+                displayProducts(data.users); // Display products
+                displayPagination(page, data.total_pages); // Display pagination controls
+            })
+            .catch(error => {
+                console.error('Error fetching products:', error);
+            })
+        
+        })
 
         //API-pagination list
         fetch(`http://10.110.69.13:8081/api/shoes?page=${page}`, Options)
@@ -152,6 +189,9 @@ function showShoes(authToken) {
         handleEditShoe(authToken);
 
     }
+
+   
+
 
     // Function to display pagination controls
     function displayPagination(currentPage, totalPages) {
@@ -233,6 +273,7 @@ function handleDelShoe(authToken) {
 }
 
 
+
 //handle edit shoe
 function handleEditShoe(authToken) {
 
@@ -307,6 +348,8 @@ function handleAddShoe(authToken) {
 
     });
 }
+
+
 
 //function add shoe
 function addShoe(authToken, product) {
@@ -542,19 +585,7 @@ function updatePriceRange() {
     document.getElementById("maxPriceLabel").textContent = maxPrice;
 }
 
-// Handle form submission
-document.getElementById("filterPriceForm").addEventListener("submit", function(event) {
-    event.preventDefault(); // Prevent form submission
-    var minPrice = document.getElementById("minPriceRange").value;
-    var maxPrice = document.getElementById("maxPriceRange").value;
-    
-    // You can handle the form data here, for example, filter the products by price range
-    console.log("Min Price: " + minPrice);
-    console.log("Max Price: " + maxPrice);
 
-    // Optionally, hide the filter panel after applying the filter
-    document.getElementById("filterPricePanel").style.display = "none";
-});
 
 
 
