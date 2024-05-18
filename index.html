@@ -47,8 +47,6 @@
         <!-- <div id="styled-table" > -->
         <h2>Shoes Tabble</h2>
 
-        <div>
-
             <div class="search-container">
                 <input type="text" id="searchInput" placeholder="Search ID...">
                 <button id="searchButton">Search</button>
@@ -62,22 +60,23 @@
                 <form id="filterPriceForm">
                     <label for="priceRange">Price Range:</label>
                     <div class="range-container">
-                        <input type="range" id="minPriceRange" name="minPriceRange" min="0" max="1000" step="10"
+                        <input type="range" id="minPriceRange" name="minPriceRange" min="0" max="10000000" step="10"
                             value="0" oninput="updatePriceRange()">
-                        <input type="range" id="maxPriceRange" name="maxPriceRange" min="0" max="1000" step="10"
-                            value="1000" oninput="updatePriceRange()">
+                        <input type="range" id="maxPriceRange" name="maxPriceRange" min="0" max="10000000" step="10"
+                            value="10000000" oninput="updatePriceRange()">
                     </div>
                     <p>Min Price: $<span id="minPriceLabel">0</span></p>
-                    <p>Max Price: $<span id="maxPriceLabel">1000</span></p>
+                    <p>Max Price: $<span id="maxPriceLabel">10000000</span></p>
 
                     <button type="submit" class="submit-btn">Apply Filter</button>
                 </form>
             </div>
+    
 
-            </didiv>
-            <div id="tools">
-                <button id="addProductBtn" class="add-product-btn">+</button> <!-- Add Product Button -->
+            <div class ="header-container">
+                <button id="addProductBtn" class="add-product-btn">+</button> <!-- Add Product Button -->    
                 <button id="logoutButton">Logout</button>
+
             </div>
             <!-- modal add product -->
 
@@ -129,6 +128,10 @@
                 </thead>
                 <tbody id="searchResults">
                     <tr id="dataSearch"></tr>
+                </tbody>
+                
+                <tbody id="filterResults">
+                    <tr id="datafilter"></tr>
                 </tbody>
 
                 <tbody id="productList">
