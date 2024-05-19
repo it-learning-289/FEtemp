@@ -4,9 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login and Register</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>T</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -44,16 +43,13 @@
 
     <div id="dataContainer">
         <div id="toast" class="toast"></div>
-        <!-- <div id="styled-table" > -->
-        <h2>Shoes Tabble</h2>
+        <div id="styled-table">
+            <h2>Shoes Tabble</h2>
 
             <div class="search-container">
                 <input type="text" id="searchInput" placeholder="Search ID...">
                 <button id="searchButton">Search</button>
             </div>
-
-            <!-- Filter Price Button -->
-            <button id="filterPriceBtn" class="filter-price-btn">Filter Price</button>
 
             <!-- Filter Price Panel -->
             <div id="filterPricePanel" class="filter-panel">
@@ -71,26 +67,62 @@
                     <button type="submit" class="submit-btn">Apply Filter</button>
                 </form>
             </div>
-    
 
-            <div class ="header-container">
-                <button id="addProductBtn" class="add-product-btn">+</button> <!-- Add Product Button -->    
-                <button id="logoutButton">Logout</button>
+
+            <div class="header-container">
+                <button id="addProductBtn" class="add-product-btn">+</button> <!-- Add Product Button -->
+                <button id="filterPriceBtn" class="filter-price-btn">Filter Price</button>
+                <div class="dropdown-container">
+                    <button id="dropdownButton" class="dropdown-btn">Menu</button>
+                    <div id="dropdownMenu" class="dropdown-content">
+                        <a href="#" id="exportLink">Export</a>
+                        <a href="#" id="logoutLink">Log Out</a>
+                    </div>
+                </div>
+
+
+                <!-- <button id="logoutButton">Logout</button> -->
 
             </div>
+
+            <div id="filterPricePanel" class="filter-panel">
+                <form id="filterPriceForm">
+                    <label for="priceRange">Price Range:</label>
+                    <div class="range-container">
+                        <input type="range" id="minPriceRange" name="minPriceRange" min="0" max="10000000" step="10"
+                            value="0" oninput="updatePriceRange()">
+                        <input type="range" id="maxPriceRange" name="maxPriceRange" min="0" max="10000000" step="10"
+                            value="10000000" oninput="updatePriceRange()">
+                    </div>
+                    <p>Min Price: $<span id="minPriceLabel">0</span></p>
+                    <p>Max Price: $<span id="maxPriceLabel">10000000</span></p>
+
+                    <button type="submit" class="submit-btn">Apply Filter</button>
+                </form>
+            </div>
+
+
             <!-- modal add product -->
 
             <div id="myModal" class="modal-add">
                 <div class="modal-content">
                     <span class="close">&times;</span>
                     <h2>Add Product</h2>
-                    <form id="addProductForm">
+                    <form id="addProductForm" >
                         <label for="productName">Name:</label>
-                        <input type="text" id="productName" name="productName" placeholder="Name">
+                        <input type="text" id="productName" name="productName" placeholder="Name"required>
+                        <!-- <span class="error-message" style="color:red; display:none;">Please enter a valid number.</span> -->
                         <label for="productPrice">Price:</label>
-                        <input type="text" id="productPrice" name="productPrice" placeholder="Price">
-                        <label for="productCategory">Category:</label>
-                        <input type="text" id="productCategory" name="productCategory" placeholder="Category">
+                        <input type="number" id="productPrice" name="productPrice" placeholder="Price" required >
+                        <label for="categories">Category:</label>
+                        <select id="productCategory" class="form-select" aria-label="Default select example" >
+                            <option value="Nike">Nike</option>
+                            <option value="Adidas">Adidas</option>
+                            <option value="Gucci">Gucci</option>
+                            <option value="MLBB">MLBB</option>
+                            <option value="GHT">GHT</option>
+                          </select>
+
                         <button type="submit" class="submit-btn">Submit</button>
                     </form>
                 </div>
@@ -104,45 +136,51 @@
                     <form id="editProductForm">
                         <!-- Edit Product Form Inputs -->
                         <label for="productName">Name:</label>
-                        <input type="text" id="productName" name="productName">
+                        <input type="text" id="productName" name="productName" required>
                         <label for="productPrice">Price:</label>
-                        <input type="text" id="productPrice" name="productPrice">
-                        <label for="productCategory">Category:</label>
-                        <input type="text" id="productCategory" name="productCategory">
+                        <input type="number" id="productPrice" name="productPrice" required>                
+                        <label for="categories">Category:</label>
+                        <select id="productCategory" class="form-select" aria-label="Default select example" >
+                            <option value="Nike">Nike</option>
+                            <option value="Adidas">Adidas</option>
+                            <option value="Gucci" >Gucci</option>
+                            <option value="MLBB">MLBB</option>
+                            <option value="GHT">GHT</option>
+                          </select>
                         <button type="submit" class="submit-btn">Submit</button>
                     </form>
                 </div>
             </div>
 
 
-            <!-- <table id="productTable"> -->
-            <table class="styled-table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Price</th>
-                        <th>Categories</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody id="searchResults">
-                    <tr id="dataSearch"></tr>
-                </tbody>
-                
-                <tbody id="filterResults">
-                    <tr id="datafilter"></tr>
-                </tbody>
+            <table id="productTable">
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Categories</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="searchResults">
+                        <tr id="dataSearch"></tr>
+                    </tbody>
 
-                <tbody id="productList">
-                    <tr id="dataList"></tr>
-                    <!-- Table rows will be added here -->
+                    <tbody id="filterResults">
+                        <tr id="datafilter"></tr>
+                    </tbody>
 
-                </tbody>
+                    <tbody id="productList">
+                        <tr id="dataList"></tr>
+                        <!-- Table rows will be added here -->
 
-            </table>
-            <br>
-            <div id="pagination"></div>
+                    </tbody>
+
+                </table>
+                <br>
+                <div id="pagination"></div>
 
 
 

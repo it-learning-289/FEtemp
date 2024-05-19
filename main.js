@@ -300,20 +300,20 @@ function handleEditShoe(authToken) {
             tds.forEach(td => {
                 values.push(td.textContent.trim());
             });
-            console.log(values);
-
-            let form  = document.querySelector("#editProductForm");
-            form.querySelector("#productName").setAttribute("value",values[1]);
-            form.querySelector("#productPrice").setAttribute("value",values[2]);
-            form.querySelector("#productCategory").setAttribute("value",values[3]);
             
+            let form  = document.querySelector("#editProductForm");
+            // console.log(form.querySelector("#productCategory"));
+            form.querySelector("#productName").value= values[1];
+            form.querySelector("#productPrice").value= values[2];
+            form.querySelector("#productCategory").value= values[3];
+
             //listen submit form edit 
             form.addEventListener("submit", function (event) {
                 event.preventDefault(); // Prevent form submission
                 var name = form.querySelector("#productName").value;
                 var price = form.querySelector("#productPrice").value;
                 var category = form.querySelector("#productCategory").value;
-        
+
                 let product = {
                     "name": name,
                     "price": price,
@@ -328,30 +328,44 @@ function handleEditShoe(authToken) {
     });
 }
 
-// Handle form submission
+// Handle form submission for add product
 function handleAddShoe(authToken) {
-    document.getElementById("addProductForm").addEventListener("submit", function (event) {
+    let addButton = document.getElementById("addProductForm");
+    addButton.addEventListener("submit", function (event) {
         event.preventDefault(); // Prevent form submission
-        var name = document.getElementById("productName").value;
-        var price = document.getElementById("productPrice").value;
+        var name = document.getElementById("productName");
+        var price = document.getElementById("productPrice");
         var category = document.getElementById("productCategory").value;
+        console.log(isNaN(price.value));
+        // const errorMessage = document.getElementById('error-message');
+        // const errorMessage = document.getElementsByClassName('error-message');
+        // console.log(errorMessage);
+        if (isNaN(price.value)) {
+            addButton.classList.add('was-validated');
+            showToast("invalid");
+        } 
+        else {
+            // price.classList.remove('error');
+            // errorMessage.style.display = 'none';
+            let product = {
+                "name": name.value,
+                "price": price.value,
+                "category": category
+            };
+    
+            // console.log(product);
+            addShoe(authToken, product);
+    
+            // Close the modal after form submission (optional)
+            showToast("adding success.");
+            setTimeout(function () {
+                modal.style.display = "none";
+                location.reload();
+            }, 1500); // Close modal after 2 seconds (2000 milliseconds        
+    
+        }
 
-        let product = {
-            "name": name,
-            "price": price,
-            "category": category
-        };
-
-        console.log(product);
-        addShoe(authToken, product);
-
-        // Close the modal after form submission (optional)
-        showToast("adding success.");
-        modal.style.display = "none";
-        setTimeout(function () {
-            location.reload();
-        }, 1000); // Close modal after 2 seconds (2000 milliseconds        
-
+        
     });
 }
 
@@ -595,6 +609,24 @@ function updatePriceRange() {
 
 
 
-
 //Log out
 document.getElementById("logoutButton").addEventListener("click", logout);
+
+
+
+document.getElementById("dropdownButton").addEventListener("click", function(event) {
+    event.stopPropagation(); // Prevent the event from bubbling up to the window click handler
+    document.querySelector(".dropdown-container").classList.toggle("show");
+});
+
+window.onclick = function(event) {
+    if (!event.target.matches('.dropdown-btn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        for (var i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.parentNode.classList.contains('show')) {
+                openDropdown.parentNode.classList.remove('show');
+            }
+        }
+    }
+};
