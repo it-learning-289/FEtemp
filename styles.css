@@ -8,7 +8,8 @@ body, h1, h2, h3, h4, h5, h6, p, ul, ol, li, dl, dt, dd, pre, form, fieldset, in
 .header-container {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    /* justify-content: space-between; */
+    justify-content:space-between;
     /* padding: 10px 20px; */
     border-radius: 5px;
     /* margin-bottom: 10px; */
@@ -288,7 +289,7 @@ tr:hover {
 }
 
 #logoutButton {
-    margin-left: 89%;
+    /* margin-left: 80%; */
     /* margin-bottom: 0px; */
 }
 
@@ -363,6 +364,9 @@ tr:hover {
         opacity: 0;
     }
 }
+.form-select {
+    line-height: 1.85;
+}
 
 
 
@@ -389,6 +393,7 @@ tr:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+
 /* Close button */
 .close {
     color: #aaa;
@@ -406,12 +411,13 @@ tr:hover {
 
 /* Edit Product Form */
 #editProductForm {
-    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 #editProductForm label {
     display: block;
     margin-bottom: 5px;
+    font-weight: bold;
 }
 
 #editProductForm input[type="text"] {
@@ -454,7 +460,7 @@ tr:hover {
     font-size: 16px;
     transition: background-color 0.3s ease;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    /* margin-bottom: 10px; */
+    /* margin-right: 73%; */
 }
 
 .filter-price-btn:hover {
@@ -463,13 +469,14 @@ tr:hover {
 
 /* Filter panel styles */
 .filter-panel {
-    display: none; /* Hidden by default */
-    background-color: #fefefe;
+   display: none;   /* Hidden by default */
+     background-color: #fefefe;
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 300px;
-    margin: 0 auto;
+    margin: 0 auto; 
+    
 }
 
 .filter-panel label {
@@ -536,6 +543,93 @@ tr:hover {
     background-color: #45a049; /* Darker green on hover */
 }
 
+
+
+   /* Container for the dropdown */
+   .dropdown-container {
+    position: relative;
+    display: inline-block;
+}
+
+/* Style for the dropdown button */
+.dropdown-btn {
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+    padding: 12px 20px; /* Padding */
+    border: none; /* No border */
+    border-radius: 4px; /* Rounded corners */
+    font-size: 16px; /* Font size */
+    cursor: pointer; /* Pointer cursor */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover effect for the button */
+.dropdown-btn:hover {
+    background-color: #45a049; /* Darker green */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Style for the dropdown content */
+.dropdown-content {
+    display: none; /* Hidden by default */
+    position: absolute;
+    background-color: #f9f9f9; /* Light background */
+    min-width: 160px; /* Minimum width */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Shadow */
+    border-radius: 4px; /* Rounded corners */
+    z-index: 1; /* On top */
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 0;
+    transform: translateY(-20px);
+}
+
+/* Show dropdown when clicked */
+.dropdown-container.show .dropdown-content {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Style for the dropdown links */
+.dropdown-content a {
+    color: black; /* Black text */
+    padding: 12px 16px; /* Padding */
+    text-decoration: none; /* No underline */
+    display: block; /* Block display */
+    border-radius: 4px; /* Rounded corners */
+    transition: background-color 0.3s ease;
+}
+
+/* Hover effect for dropdown links */
+.dropdown-content a:hover {
+    background-color: #ddd; /* Light gray */
+}
+
+/* .error {
+    border: 2px solid red;
+} */
+
+form {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.3s;
+}
 
 
 
